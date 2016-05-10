@@ -183,4 +183,4 @@ function buildLab(entry, matriz) {
 fillboard();
 //deleteWall(2, 2, "u");
 //console.log(matriz[4][4]);
-buildLab(matriz[0][0], matriz);
+//buildLab(matriz[0][0], matriz);
