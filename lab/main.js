@@ -1,5 +1,5 @@
 var matriz = [];
-var size = 10;
+var size = 5;
 
 function drawCell(x, y) {
     new Path()
@@ -174,6 +174,7 @@ function findPath(entry, goal, matriz){
         posY = stack[stack.length - 1].posY;
 
         if(posX >= size - 1 || !matriz[posX + 1][posY].pathState){
+            console.log("asd");
             stack.push(matriz[posX + 1][posY]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -183,6 +184,7 @@ function findPath(entry, goal, matriz){
 
         } else if(posY <= 0 || !matriz[posX][posY - 1].pathState){
 
+            console.log("cenas123");
             stack.push(matriz[posX][posY - 1]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -191,6 +193,7 @@ function findPath(entry, goal, matriz){
             continue;
 
         } else if (posX <= 0 || !matriz[posX - 1][posY].pathState) {
+            console.log("cenas");
             stack.push(matriz[posX - 1][posY]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -199,6 +202,7 @@ function findPath(entry, goal, matriz){
             continue;
 
         } else if (posY >= size - 1 || !matriz[posX][posY + 1].pathState) {
+            console.log("outras");
             stack.push(matriz[posX][posY + 1]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -207,6 +211,7 @@ function findPath(entry, goal, matriz){
             continue;
 
         } else {
+            console.log("pop");
             stack.pop();
         }
 
