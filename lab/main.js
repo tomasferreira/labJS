@@ -1,5 +1,5 @@
 var matriz = [];
-var size = 5;
+var size = 10;
 
 function drawCell(x, y) {
     new Path()
