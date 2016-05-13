@@ -1,5 +1,5 @@
 var matriz = [];
-var size = 5;
+var size = 10;
 
 function drawCell(x, y) {
     new Path()
@@ -41,6 +41,7 @@ function deleteWall(x, y, direction) {
         .stroke('white', 1)
         .addTo(stage);
         matriz[x][y].uWall = false;
+        matriz[x][y-1].dWall = false;
         break;
         case "d":
         new Path()
@@ -49,6 +50,7 @@ function deleteWall(x, y, direction) {
         .stroke('white', 1)
         .addTo(stage);
         matriz[x][y].dWall = false;
+        matriz[x][y+1].uWall = false;
         break;
         case "r":
         new Path()
@@ -57,6 +59,7 @@ function deleteWall(x, y, direction) {
         .stroke('white', 1)
         .addTo(stage);
         matriz[x][y].rWall = false;
+        matriz[x+1][y].lWall = false;
         break;
         case "l":
         new Path()
@@ -65,6 +68,7 @@ function deleteWall(x, y, direction) {
         .stroke('white', 1)
         .addTo(stage);
         matriz[x][y].lWall = false;
+        matriz[x-1][y].rWall = false;
         break;
     }
 }
@@ -173,8 +177,9 @@ function findPath(entry, goal, matriz){
         posX = stack[stack.length - 1].posX;
         posY = stack[stack.length - 1].posY;
 
-        if(posX >= size - 1 || !matriz[posX + 1][posY].pathState){
-            console.log("asd");
+        // if(posX >= size - 1 || !matriz[posX + 1][posY].pathState){
+        if(!matriz[posX][posY].rWall && !matriz[posX + 1][posY].pathState){
+            // console.log("asd");
             stack.push(matriz[posX + 1][posY]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -182,9 +187,9 @@ function findPath(entry, goal, matriz){
             new Circle((posX * 100) + 50, (posY * 100) + 50, 5).fill('red').addTo(stage);
             continue;
 
-        } else if(posY <= 0 || !matriz[posX][posY - 1].pathState){
+        // } else if(posY <= 0 || !matriz[posX][posY - 1].pathState){
+        } else if(!matriz[posX][posY].uWall && !matriz[posX][posY - 1].pathState){
 
-            console.log("cenas123");
             stack.push(matriz[posX][posY - 1]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -192,8 +197,9 @@ function findPath(entry, goal, matriz){
             new Circle((posX * 100) + 50, (posY * 100) + 50, 5).fill('red').addTo(stage);
             continue;
 
-        } else if (posX <= 0 || !matriz[posX - 1][posY].pathState) {
-            console.log("cenas");
+        // } else if (posX <= 0 || !matriz[posX - 1][posY].pathState) {
+        } else if (!matriz[posX][posY].lWall && !matriz[posX - 1][posY].pathState){
+            //console.log("cenas");
             stack.push(matriz[posX - 1][posY]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -201,8 +207,8 @@ function findPath(entry, goal, matriz){
             new Circle((posX * 100) + 50, (posY * 100) + 50, 5).fill('red').addTo(stage);
             continue;
 
-        } else if (posY >= size - 1 || !matriz[posX][posY + 1].pathState) {
-            console.log("outras");
+        // } else if (posY >= size - 1 || !matriz[posX][posY + 1].pathState) {
+        } else if (!matriz[posX][posY].dWall && !matriz[posX][posY + 1].pathState){
             stack.push(matriz[posX][posY + 1]);
             posX = stack[stack.length - 1].posX;
             posY = stack[stack.length - 1].posY;
@@ -211,7 +217,7 @@ function findPath(entry, goal, matriz){
             continue;
 
         } else {
-            console.log("pop");
+            new Circle((posX * 100) + 50, (posY * 100) + 50, 5).fill('white').addTo(stage);
             stack.pop();
         }
 
@@ -223,4 +229,6 @@ fillboard();
 //deleteWall(2, 2, "u");
 //console.log(matriz[4][4]);
 buildLab(matriz[0][0], matriz);
+//console.log(matriz[0][0].dWall);
+//console.log(matriz[0][1].uWall);
 findPath(matriz[0][0], matriz[3][3], matriz);
